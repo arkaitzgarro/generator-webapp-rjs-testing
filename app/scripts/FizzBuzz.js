@@ -4,13 +4,6 @@ define('FizzBuzz', ['Fizz', 'Buzz'], function() {
 
     var validators = [];
 
-    for (var i = 0; i < arguments.length; i++) {
-        // TODO: Check if is instance of Validator
-        if(arguments[i].hasOwnProperty('validate')) {
-            validators.push(arguments[i]);
-        }
-    }
-
     var testNumber = function(num){
         var n = num || 1,
             res = [];
@@ -40,8 +33,20 @@ define('FizzBuzz', ['Fizz', 'Buzz'], function() {
         return res.join(glue);
     };
 
+    var addValidator = function(validator) {
+        // TODO: Check if is instance of Validator
+        if(validator.hasOwnProperty('validate')) {
+            validators.push(validator);
+        }
+    };
+
+    for (var i = 0; i < arguments.length; i++) {
+        addValidator(arguments[i]);
+    }
+
     return {
         testNumber : testNumber,
-        print : print
+        print : print,
+        addValidator : addValidator
     };
 });

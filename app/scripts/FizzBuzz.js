@@ -1,17 +1,24 @@
 // APP.FizzBuzz = (function(){})();
-define('FizzBuzz', ['Fizz', 'Buzz'], function(Fizz, Buzz) {
+define('FizzBuzz', ['Fizz', 'Buzz'], function() {
     console.log('Fizz Buzz app');
+
+    var validators = [];
+
+    for (var i = 0; i < arguments.length; i++) {
+        // TODO: Check if is instance of Validator
+        if(arguments[i].hasOwnProperty('validate')) {
+            validators.push(arguments[i]);
+        }
+    }
 
     var testNumber = function(num){
         var n = num || 1,
             res = [];
 
-        if(Fizz.validate(n)) {
-            res.push(Fizz.getValue());
-        }
-
-        if(Buzz.validate(n)) {
-            res.push(Buzz.getValue());
+        for (var i = 0; i < validators.length; i++) {
+            if(validators[i].validate(n)) {
+                res.push(validators[i].getValue());
+            }
         }
 
         if(!res.length) {
